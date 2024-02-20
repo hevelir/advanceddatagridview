@@ -55,7 +55,7 @@ namespace Zuby.ADGV
         /// <summary>
         /// Default checklist filter node behaviour 
         /// </summary>
-        public const bool DefaultCheckTextFilterRemoveNodesOnSearch = true;
+        public const bool DefaultCheckTextFilterRemoveNodesOnSearch = false;
 
         /// <summary>
         /// Default max filter checklist max nodes
@@ -160,6 +160,8 @@ namespace Zuby.ADGV
             _textFilterTextChangedTimer = new Timer();
             _textFilterTextChangedTimer.Interval = _textFilterTextChangedDelayMs;
             _textFilterTextChangedTimer.Tick += new EventHandler(this.CheckTextFilterTextChangedTimer_Tick);
+
+            checkList.Font = new Font("Calibri", 9.25f);
         }
 
         /// <summary>
@@ -891,18 +893,6 @@ namespace Zuby.ADGV
                         sb.Append(n.Value.ToString());
                         break;
                     }
-                }
-                else if (DataType == typeof(int) || DataType == typeof(long) || DataType == typeof(short) ||
-                         DataType == typeof(uint) || DataType == typeof(ulong) || DataType == typeof(ushort) ||
-                         DataType == typeof(byte) || DataType == typeof(sbyte))
-                {
-                    foreach (TreeNodeItemSelector n in nodes)
-                        sb.Append(n.Value.ToString() + appx);
-                }
-                else if (DataType == typeof(float) || DataType == typeof(double) || DataType == typeof(decimal))
-                {
-                    foreach (TreeNodeItemSelector n in nodes)
-                        sb.Append(n.Value.ToString().Replace(",", ".") + appx);
                 }
                 else if (DataType == typeof(Bitmap))
                 { }
