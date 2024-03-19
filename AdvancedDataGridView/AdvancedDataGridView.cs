@@ -927,7 +927,7 @@ namespace Zuby.ADGV
             {
                 return (!String.IsNullOrEmpty(_filterString) ? _filterString : "");
             }
-            private set
+             set
             {
                 string old = value;
                 if (old != _filterString)
@@ -1415,15 +1415,21 @@ namespace Zuby.ADGV
 
                 Rectangle rect = GetCellDisplayRectangle(column.Index, -1, true);
 
-                if (_filteredColumns.Contains(column.Name))
-                    filterMenu.Show(this, rect.Left, rect.Bottom, false);
+                if (/*_filteredColumns.Contains(column.Name) &&*/ FilterString.Contains("[" + column.Name + "]"))
+                    if (_filterOrderList.Count() > 0 && _filterOrderList.Last() == column.Name)
+                    {
+                        filterMenu.LoadedNodes = filterMenu.lastFilterLoadedNodes;
+                        filterMenu.Show(this, rect.Left, rect.Bottom, true);
+                    }
+                    else
+                    {
+                        filterMenu.Show(this, rect.Left, rect.Bottom, column.Name);
+                    }
                 else
                 {
+                     filterMenu.Show(this, rect.Left, rect.Bottom, column.Name, true);
+                       
                     _filteredColumns.Add(column.Name);
-                    if (_filterOrderList.Count() > 0 && _filterOrderList.Last() == column.Name)
-                        filterMenu.Show(this, rect.Left, rect.Bottom, true);
-                    else
-                        filterMenu.Show(this, rect.Left, rect.Bottom, column.Name);
                 }
             }
         }
