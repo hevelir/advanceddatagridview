@@ -85,6 +85,7 @@ namespace Zuby.ADGV
         private FilterType _activeFilterType = FilterType.None;
         private SortType _activeSortType = SortType.None;
         private TreeNodeItemSelector[] _loadedNodes = new TreeNodeItemSelector[] { };
+        private TreeNodeItemSelector[] _lastFilterLoadedNodes = new TreeNodeItemSelector[] { };
         private TreeNodeItemSelector[] _startingNodes = new TreeNodeItemSelector[] { };
         private TreeNodeItemSelector[] _removedNodes = new TreeNodeItemSelector[] { };
         private TreeNodeItemSelector[] _removedsessionNodes = new TreeNodeItemSelector[] { };
@@ -279,6 +280,52 @@ namespace Zuby.ADGV
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public TreeNodeItemSelector[] StartingNodes
+        {
+            get
+            {
+                return _startingNodes;
+            }
+            set
+            {
+                _startingNodes = value;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TreeNodeItemSelector[] LoadedNodes
+        {
+            get
+            {
+                return _loadedNodes;
+            }
+            set
+            {
+                _loadedNodes = value;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TreeNodeItemSelector[] lastFilterLoadedNodes
+        {
+            get
+            {
+                return _lastFilterLoadedNodes;
+            }
+            set
+            {
+                _lastFilterLoadedNodes = value;
+            }
+        }
+
+        /// <summary>
         /// Get the current MenuStripSortType type
         /// </summary>
         public SortType ActiveSortType
@@ -299,6 +346,8 @@ namespace Zuby.ADGV
                 return _activeFilterType;
             }
         }
+
+
 
         /// <summary>
         /// Get the DataType for the MenuStrip Filter
@@ -514,7 +563,7 @@ namespace Zuby.ADGV
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="columnName"></param>
-        public void Show(Control control, int x, int y, string columnName)
+        public void Show(Control control, int x, int y, string columnName, Boolean rebuildNodes = true)
         {
             _removedNodes = new TreeNodeItemSelector[] { };
             _removedsessionNodes = new TreeNodeItemSelector[] { };
@@ -522,7 +571,10 @@ namespace Zuby.ADGV
             //add nodes
             DataGridView dataGridView = control as DataGridView;
             IEnumerable<DataGridViewCell> vals = dataGridView != null ? GetValuesForFilter(dataGridView, columnName) : Enumerable.Empty<DataGridViewCell>();
-            BuildNodes(vals, dataGridView, columnName);
+            if (rebuildNodes)
+            {
+                BuildNodes(vals, dataGridView, columnName);
+            }
             //set the starting nodes
             _startingNodes = DuplicateNodes(_loadedNodes);
 
@@ -1405,6 +1457,9 @@ namespace Zuby.ADGV
             _filterclick = true;
 
             SetCheckListFilter();
+
+            lastFilterLoadedNodes = LoadedNodes;
+
             Close();
         }
 
