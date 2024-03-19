@@ -1410,6 +1410,18 @@ namespace Zuby.ADGV
         {
             if (Columns.Contains(e.Column))
             {
+                try
+                {
+                    if (this.DataSource is BindingSource bindingsource)
+                    {
+                        bindingsource.EndEdit();
+                    }
+                    this.EndEdit();
+                }
+                catch (Exception ex)
+                {
+                    // EOP
+                }
                 MenuStrip filterMenu = e.FilterMenu;
                 DataGridViewColumn column = e.Column;
 
