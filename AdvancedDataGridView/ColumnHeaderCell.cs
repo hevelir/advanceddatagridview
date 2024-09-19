@@ -15,7 +15,7 @@ namespace Zuby.ADGV
 {
 
     [System.ComponentModel.DesignerCategory("")]
-    internal class ColumnHeaderCell : DataGridViewColumnHeaderCell
+    public class ColumnHeaderCell : DataGridViewColumnHeaderCell
     {
 
         #region public events
@@ -742,8 +742,8 @@ namespace Zuby.ADGV
 
     }
 
-    internal delegate void ColumnHeaderCellEventHandler(object sender, ColumnHeaderCellEventArgs e);
-    internal class ColumnHeaderCellEventArgs : EventArgs
+    public delegate void ColumnHeaderCellEventHandler(object sender, ColumnHeaderCellEventArgs e);
+    public class ColumnHeaderCellEventArgs : EventArgs
     {
         public MenuStrip FilterMenu { get; private set; }
 

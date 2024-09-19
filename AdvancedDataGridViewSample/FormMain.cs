@@ -318,8 +318,78 @@ namespace AdvancedDataGridViewSample
             toolStripStatusLabel_memory.Text = String.Format("Memory Usage: {0}Mb", GC.GetTotalMemory(false) / (1024 * 1024));
         }
 
+        //private string getFilterStringFromList(string columnName, List<string> filterList)
+        //{
+
+        //    if (filterList.Count == 0) return "";
+
+        //    string result = $"[{columnName}] in (";
+
+        //    foreach (string s in filterList)
+        //    {
+        //        result += $"'{s}', ";
+        //    }
+
+        //    result = result.Substring(0, result.Length - 2) + ")";
+
+        //    return result;
+        //}
+
+        private void testFiltering()
+        {
+            List<string> filterListProjektek = new List<string>
+{
+                "Újbuda Residence",
+                "Cosmo Residence",
+                "98 str",
+                "1 str"
+            };
+
+            setFilterForColumn(advancedDataGridView_main, "string", filterListProjektek);
+
+            List<string> filterListSzobaszam = new List<string>
+{
+                "98",
+                "1",
+                "2"
+            };
+
+            setFilterForColumn(advancedDataGridView_main, "int", filterListSzobaszam);
+        }
+
+        private void setFilterForColumn(AdvancedDataGridView dgv, string columnName, List<string> filterList) {
+
+            dgv.FilterOrderList.Add("string");
+
+            ColumnHeaderCell chc = new ColumnHeaderCell(dgv.Columns["string"].HeaderCell, Enabled);
+
+            chc.MenuStrip.BuildNodes(Zuby.ADGV.MenuStrip.GetValuesForFilter(dgv, "string"), dgv, "string");
+
+            foreach (var node in chc.MenuStrip.LoadedNodes)
+            {
+                if (filterList.Contains(node.Text))
+                {
+                    // Set the CheckState to Checked
+                    node.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    // Set the CheckState to Unchecked
+                    node.CheckState = CheckState.Unchecked;
+                }
+            }
+
+            chc.MenuStrip.SetCheckListFilter();
+            chc.MenuStrip.LastFilterLoadedNodes = chc.MenuStrip.LoadedNodes;
+        }
+
         private void button_memorytest_Click(object sender, EventArgs e)
         {
+
+            testFiltering();
+
+            return;
+
             if (comboBox_memorytest.SelectedItem != null && comboBox_memorytest.SelectedItem.ToString() == "FullForm")
             {
                 //build random data

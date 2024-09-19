@@ -283,6 +283,19 @@ namespace Zuby.ADGV
             }
         }
 
+        public List<string> FilterOrderList
+        {
+            get { return _filterOrderList; }
+            set { _filterOrderList = value; }
+        }
+
+        public List<string> FilteredColumns
+        {
+            get { return _filteredColumns; }
+            set { _filteredColumns = value; }
+        }
+
+
         /// <summary>
         /// Get translation dictionary
         /// </summary>
@@ -1430,7 +1443,7 @@ namespace Zuby.ADGV
                 if (/*_filteredColumns.Contains(column.Name) &&*/ FilterString.Contains("[" + column.Name + "]"))
                     if (_filterOrderList.Count() > 0 && _filterOrderList.Last() == column.Name)
                     {
-                        filterMenu.LoadedNodes = filterMenu.lastFilterLoadedNodes;
+                        filterMenu.LoadedNodes = filterMenu.LastFilterLoadedNodes;
                         filterMenu.Show(this, rect.Left, rect.Bottom, true);
                     }
                     else

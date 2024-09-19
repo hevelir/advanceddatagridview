@@ -20,7 +20,7 @@ namespace Zuby.ADGV
 {
 
     [System.ComponentModel.DesignerCategory("")]
-    internal partial class MenuStrip : ContextMenuStrip
+    public partial class MenuStrip : ContextMenuStrip
     {
 
         #region public enum
@@ -313,7 +313,7 @@ namespace Zuby.ADGV
         /// <summary>
         /// 
         /// </summary>
-        public TreeNodeItemSelector[] lastFilterLoadedNodes
+        public TreeNodeItemSelector[] LastFilterLoadedNodes
         {
             get
             {
@@ -701,7 +701,7 @@ namespace Zuby.ADGV
             {
                 return (!String.IsNullOrEmpty(_filterString) ? _filterString : "");
             }
-            private set
+            set
             {
                 cancelFilterMenuItem.Enabled = (value != null && value.Length > 0);
                 _filterString = value;
@@ -814,7 +814,7 @@ namespace Zuby.ADGV
         /// <summary>
         /// Set the Filter String using checkList selected Nodes
         /// </summary>
-        private void SetCheckListFilter()
+        public void SetCheckListFilter()
         {
             UnCheckCustomFilters();
 
@@ -977,7 +977,7 @@ namespace Zuby.ADGV
         /// <param name="vals"></param>
         /// <param name="dataGridView"></param>
         /// <param name="columnName"></param>
-        private void BuildNodes(IEnumerable<DataGridViewCell> vals, DataGridView dataGridView, string columnName)
+        public void BuildNodes(IEnumerable<DataGridViewCell> vals, DataGridView dataGridView, string columnName)
         {
             if (!IsFilterChecklistEnabled)
                 return;
@@ -1458,7 +1458,7 @@ namespace Zuby.ADGV
 
             SetCheckListFilter();
 
-            lastFilterLoadedNodes = LoadedNodes;
+            LastFilterLoadedNodes = LoadedNodes;
 
             Close();
         }

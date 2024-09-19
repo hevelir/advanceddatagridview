@@ -13,7 +13,7 @@ using System.Windows.Forms;
 namespace Zuby.ADGV
 {
     [System.ComponentModel.DesignerCategory("")]
-    internal class TreeNodeItemSelector : TreeNode
+    public class TreeNodeItemSelector : TreeNode
     {
 
         #region public enum
